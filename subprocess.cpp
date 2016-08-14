@@ -76,7 +76,8 @@ string subprocess::read(int n){
 }
 
 void subprocess::write(string str){  
-  ::write(stdin(), (void*)str.c_str(), str.size());  
+  int res = ::write(stdin(), (void*)str.c_str(), str.size());
+  if (res < 0) throw SubprocessException("Failed to write to stdin");
 }
 
 
