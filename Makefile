@@ -1,25 +1,21 @@
-GPP=g++-4.9 -std=c++14 # -std=c++11
-GPPOPT=-c
+GPP=g++ -std=c++14
 
-OBJ=cpusample.o stat.o pidstat.o
-LIB=perfdata.a
+OBJ = cppshell.o subprocess.o 
+PROG = two_way_test_program
 
 
-all: lib procstat pidstat
+# NOTE: subprocess need pthread
+LIB=-pthread
 
-lib: $(OBJ)
-	ar rcs perfdata.a $(OBJ)
-	$(RM) $(OBJ)
+all: $(OBJ) $(PROG)
+	$(GPP) $(OBJ) $(LIB) demo.cpp -o demo
 
-procstat: lib procstat.cpp
-	$(GPP) $@.cpp $(LIB) -o $@
-
-pidstat: lib pidstat_main.cpp
-	$(GPP) pidstat_main.cpp $(LIB) -o $@
 
 %.o: %.cpp %.hpp
-	$(GPP) $(GPPOPT) $< -o $@
+	$(GPP) -c  $< -o $@
 
+%:%.cpp
+	$(GPP) $< -o $@
 
 clean:
-	$(RM) $(OBJ) $(LIB) procstat pidstat
+	$(RM)  $(OBJ)  $(PROG) demo
