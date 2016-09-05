@@ -16,6 +16,19 @@
 namespace perfdata{
 
   class Pidstat { 
+  public:
+    Pidstat(int pid);
+    
+    int get_pid()
+    { return pid_; };
+    
+    unsigned long cpu_time_total()
+    { return stime_ + utime_; };
+    
+    unsigned long guest_time_total()
+    { return guest_time_ + cguest_time_; };
+    
+  private:
     int pid_;
     std::string filename_;
     char state_;
@@ -71,20 +84,9 @@ namespace perfdata{
     unsigned long env_end_;
     int exit_code_;
     
-    
-    
-  public:
-    Pidstat(int pid);
-    inline int get_pid(){ return pid_; };    
-    inline unsigned long cpu_time_total(){ return stime_ + utime_; };    
-    inline int guest_time_total(){ return guest_time_ + cguest_time_; };
-    
     // Stream operator
     friend std::ostream& perfdata::operator<<(std::ostream&,Pidstat&);
-     
-  
-
-  };   
+  };
   
   /** Exception */
   class PidstatException : public std::runtime_error{
