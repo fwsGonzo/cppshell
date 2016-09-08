@@ -1,4 +1,4 @@
-*.d
 *.o
+*.d
 demo
 two_way_test_program

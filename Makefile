@@ -1,4 +1,3 @@
-
 GPP=g++ -std=c++14
 
 OBJ = cppshell.o subprocess.o 
