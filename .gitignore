@@ -1,0 +1,4 @@
+*.d
+*.o
+demo
+two_way_test_program
